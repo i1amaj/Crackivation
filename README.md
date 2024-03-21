@@ -12,10 +12,11 @@ Crackivation
 ```
 
 ##### Screenshots:
-![Login](https://github.com/i1amaj/Crackivation/assets/146009506/89e928a8-9fb6-4d0f-9bd9-655d93c03da6)
-![todo](https://github.com/i1amaj/Crackivation/assets/146009506/ba7e616d-3e0f-4684-8c45-81fad88cc0a5)
-![Journal](https://github.com/i1amaj/Crackivation/assets/146009506/a12f2947-21f4-4dce-bd2d-d88d153f46e5)
-![Crackivation](https://github.com/i1amaj/Crackivation/assets/146009506/f499f36d-320f-4658-9d60-3af952412208)
+<img src="https://github.com/i1amaj/Crackivation/assets/146009506/89e928a8-9fb6-4d0f-9bd9-655d93c03da6" alt="Login" width="500" height="250" />
+<img src="https://github.com/i1amaj/Crackivation/assets/146009506/fbe8c455-ba21-4164-a5e0-bf7ae2b9c7cc" alt="Todo" width="500" height="250" />
+<img src="https://github.com/i1amaj/Crackivation/assets/146009506/5f790a7d-2146-45af-bcbb-6ce254607d46" alt="Journal" width="500" height="250" />
+<img src="https://github.com/i1amaj/Crackivation/assets/146009506/f499f36d-320f-4658-9d60-3af952412208" alt="Crackivation" width="500" height="250" />
+
 
 ##### Files and Folders:
 
