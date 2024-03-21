@@ -12,7 +12,7 @@ Crackivation
 ```
 
 ##### Screenshots:
-<img src="https://github.com/i1amaj/Crackivation/assets/146009506/89e928a8-9fb6-4d0f-9bd9-655d93c03da6" alt="Login" width="400" height="200" />
+<img src="https://github.com/i1amaj/Crackivation/assets/146009506/89e928a8-9fb6-4d0f-9bd9-655d93c03da6" alt="Login" width="400" height="200" style="border: 10px solid blue"/>
 <img src="https://github.com/i1amaj/Crackivation/assets/146009506/fbe8c455-ba21-4164-a5e0-bf7ae2b9c7cc" alt="Todo" width="400" height="200" />
 <img src="https://github.com/i1amaj/Crackivation/assets/146009506/5f790a7d-2146-45af-bcbb-6ce254607d46" alt="Journal" width="400" height="200" />
 <img src="https://github.com/i1amaj/Crackivation/assets/146009506/f499f36d-320f-4658-9d60-3af952412208" alt="Crackivation" width="400" height="200" />
