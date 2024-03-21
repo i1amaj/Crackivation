@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>Journal</title>
+    </head>
+
+    <body id="journalbody">
+        <div class="navigation_div">
+            <div class="nav_div"> <a href="/todo" id="todo" class="nav_buttons"></a></div>
+            <div class="nav_div"><a href="/crackivation" id="crack" class="nav_buttons"></a></div>
+            <div class="nav_div"><a href="/logout" id="logout" class="nav_buttons"></a></div>
+        </div>
+
+        <div id="quote_div">
+        </div>
+        <div id="journal_div">{{ data|safe }}</div>
+        <input id="input" type="text">
+        <form action="/journal" method="Post">
+            <input id="journal_input" name="data">
+            <button id="journal_button" type="submit" name="button"></button>
+        </form>
+    </body>
+
+</html>
+
+<script>
+
+    const journalInput = document.querySelector("#journal_input");
+    const input = document.querySelector("#input");
+    const journalDiv = document.querySelector("#journal_div");
+    const quoteDiv = document.querySelector("#quote_div");
+    journalInput.value = journalDiv.innerHTML;
+    input.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            journalDiv.innerHTML += `<p class="journal_task">${input.value}</p> `;
+            input.value = "";
+            journalInput.value = journalDiv.innerHTML;
+        } else if (event.key === "_") {
+            journalDiv.innerHTML += `<img id="journal_image_right" src="${input.value}" alt="Invalid Image">`;
+            input.value = "";
+            journalInput.value = journalDiv.innerHTML;
+        } else if (event.key === "-") {
+            journalDiv.innerHTML += `<img id="journal_image_left" src="${input.value}" alt="Invalid Image">`;
+            input.value = "";
+            journalInput.value = journalDiv.innerHTML;
+        }
+    });
+
+    journalDiv.onclick = function(event) {
+        event.target.remove();
+        journalInput.value = journalDiv.innerHTML;
+    };
+
+    // random quotes generator
+    const quotes = [
+        "“Productivity is being able to do things that you were never able to do before.”",
+        "“Time is the school in which we learn, time is the fire in which we burn.”",
+        "“Both good and bad days should end with productivity.”",
+        "“If you are interested in balancing work and pleasure, instead make your work pleasurable.”",
+        "“Working on the right thing is probably more important than working hard.”",
+        "“The key to productivity is to rotate your avoidance techniques.” ",
+        "“You must remain focused on your journey to greatness.”",
+        "“Nothing is particularly hard when you divide it into small jobs.”",
+        " “You don't have to see the whole staircase, just take the first step.”",
+        "“Do the hard jobs first. The easy jobs will take care of themselves.”",
+        "“Practice isn't the thing you do once you're good. It's the thing you do that makes you good.”",
+        "“You were born to win, but to be a winner, you must plan to win”",
+    ]
+
+    quoteDiv.innerHTML = quotes[Math.floor(Math.random() * 10)];
+</script>

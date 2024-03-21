@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>Register</title>
+    </head>
+
+    <body id="detailsbody">
+        <div id="blue_div"></div>
+        <div id="photodiv"></div>>
+        <div id="photo_div"></div>
+        <form action="/register" method="post">
+            <div id="details_div">
+                <input type="text" id="name_input" placeholder="Enter your Name" name="username" autocomplete="off" required>
+                <input type="password" id="password_input" placeholder="Enter your Password" name="password" autocomplete="off" required>
+                <input type="password" id="confirmation_input" placeholder="Confirm your Password" name="confirmation" autocomplete="off" required>
+                <button id="register_button" type="submit" name="button-login">Register</button>
+
+            </div>
+        </form>
+        <form action="/login" method="post">
+            <button id="go_to_button" type="submit" name="button"></button>
+        </form>
+
+        <div id="error_div">{{ error }}</div>
+        <div id="footer"></div>
+
+    </body>
+
+</html>

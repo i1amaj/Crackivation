@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>TODO</title>
+    </head>
+
+    <body id="todo_body">
+        <div class="navigation_div">
+            <div class="nav_div"><a href="/crackivation" id="crack" class="nav_buttons"></a></div>
+            <div class="nav_div"><a href="/journal" id="journal" class="nav_buttons"></a></div>
+            <div class="nav_div"><a href="/logout" id="logout" class="nav_buttons"></a></div>
+        </div>
+        <div id="top_div">
+            <h2 id="top_heading">Prioritize Your Day!</h2>
+        </div>
+        <input type="text" id="todo_input" autocomplete="off" autofocus placeholder="To do list">
+        <button type="submit" id="todo_button">Add to List</button>
+        <form action="/todo" method="Post">
+            <input type="text" name="data" id="todo_save_input">
+            <button id="todo_save_button" type="submit" name="button"></button>
+        </form>
+
+        <div id="todo_div">{{ data | safe }}</div>
+
+        <!-- THE MOOD -->
+        <h2 id="mood_heading">How's your mood today?</h2>
+        <div id="moods_div">
+            <img src="https://i.pinimg.com/564x/11/31/59/113159ead5c160ef10b17ba41bc53fcd.jpg" alt="happy" class="moods" id="Happy">
+            <img src="https://i.pinimg.com/564x/ae/20/7b/ae207bd981f584ce1f23f8cbbed3b1ff.jpg" alt="living" class="moods" id="Hopeful">
+            <img src="https://i.pinimg.com/564x/5c/01/fc/5c01fc597cc489334f2558cd7d909d1b.jpg" alt="worried" class="moods" id="Restless">
+            <img src="https://i.pinimg.com/564x/fb/94/59/fb945911f5f427e10f85a1ecb2d1200a.jpg" alt="angry" class="moods" id="Angry">
+            <img src="https://i.imgur.com/xFofsPl.jpg" alt="sad" class="moods" id="Crying">
+        </div>
+
+        <!-- water intake -->
+        <h2 id="water_heading">Today's water intake:</h2>
+        <div id="water_div">
+            <img src="https://i.imgur.com/eCQ2ysE.png" class="water_glasses" id="g1">
+            <img src="https://i.imgur.com/eCQ2ysE.png" class="water_glasses" id="g2">
+            <img src="https://i.imgur.com/eCQ2ysE.png" class="water_glasses" id="g3">
+            <img src="https://i.imgur.com/eCQ2ysE.png" class="water_glasses" id="g4">
+            <img src="https://i.imgur.com/eCQ2ysE.png" class="water_glasses" id="g5">
+            <img src="https://i.imgur.com/eCQ2ysE.png" class="water_glasses" id="g6">
+            <img src="https://i.imgur.com/eCQ2ysE.png" class="water_glasses" id="g7">
+            <img src="https://i.imgur.com/eCQ2ysE.png" class="water_glasses" id="g8">
+        </div>
+
+        <!-- sleep track -->
+        <h2 id="sleep_heading">Your sleep schedule:</h2>
+        <div id="sleep_div">
+            <p class="sleep_hours">4-5hr</p>
+            <p class="sleep_hours">5-7hr</p>
+            <p class="sleep_hours">7-8hr</p>
+            <p class="sleep_hours">8-10hr</p>
+            <p class="sleep_hours">10-12hr</p>
+        </div>
+    </body>
+
+</html>
+
+<script>
+    // to add tasks
+    let input = document.querySelector('#todo_input');
+    let todo = document.querySelector('#todo_save_input');
+    let todoDiv = document.querySelector('#todo_div');
+    todo.value = todoDiv.innerHTML;
+
+    document.querySelector('#todo_button').onclick = function() {
+        if (input.value.length == 0) {
+            alert("Give an input!");
+        } else {
+            todoDiv.innerHTML += `<p class="todo_task">♡ <span id="todo_span" class="todo_span_class">${input.value}</span></p>`;
+            input.value = "";
+            todo.value = todoDiv.innerHTML;
+        }
+
+    };
+
+    // to cut the todo
+    document.querySelector('#todo_div').onclick = function(event) {
+
+        // cut todo on single click
+        if (event.target.tagName === 'SPAN' && event.target.style.textDecoration !== 'line-through') {
+            event.target.style.textDecoration = 'line-through';
+            todo.value = todoDiv.innerHTML;
+        }
+        // delete todo on double click
+        else {
+            event.target.parentNode.remove();
+            todo.value = todoDiv.innerHTML;
+        }
+    };
+
+    // mood selector
+
+    document.querySelector('#moods_div').onclick = function(event) {
+
+        const moodsArray = document.getElementsByClassName('moods');
+        for (let i = 0; i < moodsArray.length; i++) {
+            moodsArray[i].style.opacity = '0.4';
+        }
+
+        event.target.style.opacity = '1';
+
+    };
+
+    // water intake
+    document.querySelector('#water_div').onclick = function(event) {
+
+        const waterArray = document.getElementsByClassName('water_glasses');
+        for (let i = 0; i < waterArray.length; i++) {
+            waterArray[i].style.opacity = '0.4';
+        }
+
+        let waters = event.target.id.replace('g', '');
+        for (let i = 0; i < waters; i++) {
+            waterArray[i].style.opacity = '1'
+        }
+    };
+
+    // sleep schedule
+    let sleep = 0;
+    document.querySelector('#sleep_div').onclick = function(event) {
+
+        const sleepArray = document.getElementsByClassName('sleep_hours');
+        for (let i = 0; i < sleepArray.length; i++) {
+            sleepArray[i].style.color = 'white';
+            sleepArray[i].style.fontWeight = 'normal';
+        }
+
+        event.target.style.color = '#737CA1';
+        event.target.style.fontWeight = 'bold';
+
+
+    };
+</script>

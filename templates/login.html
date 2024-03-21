@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>Login</title>
+    </head>
+
+    <body id="detailsbody">
+        <div id="blue_div"></div>
+        <div id="photodiv"></div>
+        <div id="photo_div"></div>
+        <form action="/login" , method="Post">
+            <div id="details_div">
+                <input type="text" id="name_input_login" placeholder="Enter username" name="username" autocomplete="off" required>
+                <input type="password" id="password_input_login" placeholder="Enter password" name="password" autocomplete="off" required>
+                <div id="error_div_login">{{ error }}</div>
+                <button id="login_button" type="submit" name="button-login">Log In</button>
+            </div>
+        </form>
+
+        <form action="/register" , method="post">
+            <button id="go_to_button" type="submit" name="button"></button>
+        </form>
+        <div id="footer"></div>
+
+    </body>
+
+</html>

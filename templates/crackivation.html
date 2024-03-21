@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>Crackivation</title>
+    </head>
+
+    <body id="crack_body">
+        <div id="crack_div">
+            <div id="date_div"></div>
+            <div id="time_div"></div>
+            <div class="navigation_div">
+                <div class="nav_div"> <a href="/todo" id="todo" class="nav_buttons"></a></div>
+                <div class="nav_div"><a href="/journal" id="journal" class="nav_buttons"></a></div>
+                <div class="nav_div"><a href="/logout" id="logout" class="nav_buttons"></a></div>
+            </div>
+        </div>
+
+        <table id="time_table_save" style="display: none">
+            <th id="day_heading">YOUR DAY</th>
+            <th id="time_heading">TIME SPENT</th>
+        </table>
+
+        <table id="time_table">{{ crackivation | safe }}</table>
+        <div id="analysis_division">{{ analysis | safe }}
+            <div id="study_table" class="analysis_div"></div>
+            <div id="play_table" class="analysis_div"></div>
+            <div id="coding_table" class="analysis_div"></div>
+            <div id="sleep_table" class="analysis_div"></div>
+            <div id="other_table" class="analysis_div"></div>
+        </div>
+        <form action="/crackivation" method="Post">
+            <input id="analysis_input" name="analysis" style="display: none">
+            <input id="crackivation_input" name="crackivation" style="display: none">
+            <input id="crackivation_template" name="template" style="display: none">
+            <button id="crackivation_button" type="submit" name="button"></button>
+        </form>
+    </body>
+ 
+</html>
+
+<script>
+    // displaying date
+    const d = new Date();
+
+    // displaying months as strings
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    // displaying date in HTML
+    if (d.getDate() < 10) {
+        document.querySelector('#date_div').innerHTML = `0${d.getDate()} / ${months[d.getMonth()]} / ${d.getFullYear()}`;
+    } else {
+        document.querySelector('#date_div').innerHTML = `${d.getDate()} / ${months[d.getMonth()]} / ${d.getFullYear()}`;
+    }
+
+    // displaying time in HTML
+    if (d.getMinutes() < 10) {
+        if (d.getHours() <= 12) {
+            if (d.getHours() < 10) {
+                document.querySelector('#time_div').innerHTML = `0${d.getHours()} : 0${d.getMinutes()} am`;
+            } else {
+                document.querySelector('#time_div').innerHTML = `${d.getHours()} : 0${d.getMinutes()} am`;
+            }
+        } else if (d.getHours() > 12) {
+            let time = d.getHours() - 12;
+
+            if (time < 10) {
+                document.querySelector('#time_div').innerHTML = `0${time} : 0${d.getMinutes()} pm`;
+            } else {
+                document.querySelector('#time_div').innerHTML = `${time} : 0${d.getMinutes()} pm`;
+            }
+        }
+    } else {
+        if (d.getHours() <= 12) {
+            if (d.getHours() < 10) {
+                document.querySelector('#time_div').innerHTML = `0${d.getHours()} : ${d.getMinutes()} am`;
+            } else {
+                document.querySelector('#time_div').innerHTML = `${d.getHours()} : ${d.getMinutes()} am`;
+            }
+        } else if (d.getHours() > 12) {
+            let time = d.getHours() - 12;
+            if (time < 10) {
+                document.querySelector('#time_div').innerHTML = `0${time} : ${d.getMinutes()} pm`;
+            } else {
+                document.querySelector('#time_div').innerHTML = `${time} : ${d.getMinutes()} pm`;
+            }
+        }
+    }
+
+    // displaying each hour
+    let hours = 0;
+    let span = "am";
+    let hour = 24;
+    let select = 0;
+
+
+    // make a 24 hours worksheet
+    for (let i = 1; i <= hour; i++) {
+        if (i < 10) {
+            document.querySelector("#time_table_save").innerHTML += `<tr class="table_row" id="t${select}"><td class="time_column">0${i}:00 ${span}</td><td class="activity_table">
+        <select class="activity_select" id="s${select}">
+        <option disabled selected id="Select" value="Select">Activity</option>
+        <option id="Study" value="Study">Study</option>
+        <option id="Play" value="Play">Play</option>
+        <option id="Codiing" value="Coding">Coding</option>
+        <option id="Sleep" value="Sleep">Sleep</option>
+        <option id="Other" value="Other">Other</option>
+        </select></td>
+        </tr>`
+        } else {
+            document.querySelector("#time_table_save").innerHTML += `<tr class="table_row" id="t${select}"><td class="time_column">${i}:00 ${span}</td><td class="activity_table">
+        <select class="activity_select" id="s${select}">
+        <option disabled selected id="Select" value="Select">Activity</option>
+        <option id="Study" value="Study">Study</option>
+        <option id="Play" value="Play">Play</option>
+        <option id="Codiing" value="Coding">Coding</option>
+        <option id="Sleep" value="Sleep">Sleep</option>
+        <option id="Other" value="Other">Other</option>
+        </select></td>
+        </tr>`
+        }
+        if (hours == 0) {
+            if (i == 12) {
+                hour = hour - 12;
+                i = 0;
+                hours += 1;
+                span = "pm";
+            }
+        }
+        select++;
+    }
+
+    document.getElementById("crackivation_template").value = document.getElementById("time_table_save").innerHTML;
+
+    let total_hours = d.getHours();
+    let play = 0;
+    let sleep = 0;
+    let study = 0;
+    let coding = 0;
+    let other = 0;
+    let selectedElements = document.querySelectorAll(".activity_select");
+    let removedElementIndex = 0;
+
+    selectedElements.forEach(function(selectedElement) {
+        selectedElement.addEventListener('change', function handleChange() {
+            let selectedElementId = selectedElement.id.replace("s", "");
+
+
+            for (let i = removedElementIndex; i <= selectedElementId; i++) {
+
+                    document.querySelectorAll('#s' + i).forEach((query) => {
+                        query.value = this.value;
+                        document.querySelector('#t' + i).remove();
+                    })
+
+                    removedElementIndex = selectedElementId;
+
+                    if (this.value == "Play") {
+                        play++;
+                        let play_area = Math.floor((play / 24) * 100);
+                        document.querySelector("#play_table").style.width = `${play_area}vw`;
+                        document.querySelector("#play_table").innerHTML = "Play";
+                        document.querySelector("#play_table").style.backgroundColor = "#a3a9c2";
+                    } else if (this.value == "Sleep") {
+                        sleep++;
+                        let sleep_area = Math.floor((sleep / 24) * 100);
+                        document.querySelector("#sleep_table").style.width = `${sleep_area}vw`;
+                        document.querySelector("#sleep_table").innerHTML = "Sleep";
+                        document.querySelector("#sleep_table").style.backgroundColor = "#c2c6d6";
+                    } else if (this.value == "Study") {
+                        study++;
+                        let study_area = Math.floor((study / 24) * 100);
+                        document.querySelector("#study_table").style.width = `${study_area}vw`;
+                        document.querySelector("#study_table").innerHTML = "Study";
+                        document.querySelector("#study_table").style.backgroundColor = "#949bb8";
+                    } else if (this.value == "Coding") {
+                        coding++;
+                        let coding_area = Math.floor((coding / 24) * 100);
+                        document.querySelector("#coding_table").style.width = `${coding_area}vw`;
+                        document.querySelector("#coding_table").innerHTML = "Coding";
+                        document.querySelector("#coding_table").style.backgroundColor = "#b3b8cc";
+                    } else if (this.value == "Other") {
+                        other++;
+                        let other_area = Math.floor((other / 24) * 100);
+                        document.querySelector("#other_table").style.width = `${other_area}vw`;
+                        document.querySelector("#other_table").innerHTML = "Other";
+                        document.querySelector("#other_table").style.backgroundColor = "#d1d4e0";
+                    }
+
+                }
+                document.getElementById("analysis_input").value = document.getElementById("analysis_division").innerHTML;
+                document.getElementById("crackivation_input").value = document.getElementById("time_table").innerHTML;
+
+
+            // checking if last element is selected or not
+            if (selectedElementId == 23) {
+                document.getElementById("time_table").innerHTML = "";
+                document.getElementById("crackivation_input").value = document.getElementById("crackivation_template").value;
+                document.getElementById("analysis_input").value = "";
+                return
+            }
+        });
+    });
+</script>
